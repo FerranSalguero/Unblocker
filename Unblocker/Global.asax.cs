@@ -37,6 +37,8 @@ namespace Unblocker
                 defaults: new { path = RouteParameter.Optional },
                 constraints: null
             );
+
+            config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
         }
     }
 
