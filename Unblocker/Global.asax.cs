@@ -43,6 +43,7 @@ namespace Unblocker
     public class ProxyHandler : DelegatingHandler
     {
         private static HttpClient client = new HttpClient();
+        private static string ForwardHost = null;
 
         protected override async Task<HttpResponseMessage> SendAsync(
             HttpRequestMessage request,
@@ -51,10 +52,14 @@ namespace Unblocker
             var query = request.RequestUri.ParseQueryString();
             var requestedUrl = query["q"];
 
-            if (string.IsNullOrEmpty(requestedUrl)) return new HttpResponseMessage();
-
-            var forwardUri = new UriBuilder(requestedUrl);
-            //forwardUri.Host = "localhost";
+            if (!string.IsNullOrEmpty(requestedUrl))
+            {
+                var req = new UriBuilder(requestedUrl);
+                ForwardHost = req.Host;
+                return new HttpResponseMessage();
+            }
+            var forwardUri = new UriBuilder(request.RequestUri.AbsoluteUri);
+            forwardUri.Host = ForwardHost;
             //forwardUri.Port = 62904;
             request.RequestUri = forwardUri.Uri;
 
