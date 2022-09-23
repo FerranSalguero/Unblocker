@@ -64,6 +64,7 @@ namespace Unblocker
             var forwardUri = new UriBuilder(request.RequestUri.AbsoluteUri);
             forwardUri.Host = ForwardHost;
             forwardUri.Port = ForwardPort;
+            forwardUri.Scheme = "https";
             request.RequestUri = forwardUri.Uri;
 
             if (request.Method == HttpMethod.Get)
