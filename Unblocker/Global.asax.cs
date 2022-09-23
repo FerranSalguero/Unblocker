@@ -44,6 +44,7 @@ namespace Unblocker
     {
         private static HttpClient client = new HttpClient();
         private static string ForwardHost = null;
+        private static int ForwardPort = 80;
 
         protected override async Task<HttpResponseMessage> SendAsync(
             HttpRequestMessage request,
@@ -55,12 +56,12 @@ namespace Unblocker
             if (!string.IsNullOrEmpty(requestedUrl))
             {
                 var req = new UriBuilder(requestedUrl);
-                ForwardHost = req.Host;
+                ConfigureForwarding(req);
                 return new HttpResponseMessage();
             }
             var forwardUri = new UriBuilder(request.RequestUri.AbsoluteUri);
             forwardUri.Host = ForwardHost;
-            //forwardUri.Port = 62904;
+            forwardUri.Port = ForwardPort;
             request.RequestUri = forwardUri.Uri;
 
             if (request.Method == HttpMethod.Get)
@@ -72,6 +73,12 @@ namespace Unblocker
             request.Headers.Host = forwardUri.Host;
             var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
             return response;
+        }
+
+        private static void ConfigureForwarding(UriBuilder req)
+        {
+            ForwardHost = req.Host;
+            ForwardPort = req.Port;
         }
     }
 }
