@@ -44,7 +44,7 @@ namespace Unblocker
 
     public class ProxyHandler : DelegatingHandler
     {
-        private static HttpClient client = new HttpClient();
+        
         private static string ForwardHost = null;
         private static int ForwardPort = 80;
 
@@ -73,8 +73,13 @@ namespace Unblocker
 
             request.Headers.Add("X-Forwarded-Host", request.Headers.Host);
             request.Headers.Host = forwardUri.Host;
-            var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
-            return response;
+
+            using (var client = new HttpClient())
+            {
+                var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
+                return response;
+            }
+            
         }
 
         private static void ConfigureForwarding(UriBuilder req)
