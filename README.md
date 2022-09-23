@@ -7,6 +7,7 @@ Sample: https://yourpersonaldomain.com?q=https://github.com
 
 Then navigate on the root or add the wanted path
 
-Sample: https://yourpersonaldomain.com
-        https://yourpersonaldomain.com/FerranSalguero/
+Samples:
+https://yourpersonaldomain.com
+https://yourpersonaldomain.com/FerranSalguero/
 
