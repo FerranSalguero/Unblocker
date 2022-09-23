@@ -1,5 +1,5 @@
 # Unblocker
-##A simple personal simple web unblocker/proxy
+## A simple personal simple web unblocker/proxy
 
 Deploy and request the root with a querystring parameter q to set the proxy forwarding destination
 
