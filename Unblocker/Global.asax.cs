@@ -25,7 +25,21 @@ namespace Unblocker
         public static void Register(HttpConfiguration config)
         {
             config.Routes.MapHttpRoute(
-                name: "Proxy",
+                name: "path",
+                routeTemplate: "{*path}",
+                handler: HttpClientFactory.CreatePipeline(
+                    innerHandler: new HttpClientHandler(),
+                    handlers: new DelegatingHandler[]
+                    {
+                    new ProxyHandler()
+                    }
+                ),
+                defaults: new { path = RouteParameter.Optional },
+                constraints: null
+            );
+
+            config.Routes.MapHttpRoute(
+                name: "all",
                 routeTemplate: "{*.*}",
                 handler: HttpClientFactory.CreatePipeline(
                     innerHandler: new HttpClientHandler(),
