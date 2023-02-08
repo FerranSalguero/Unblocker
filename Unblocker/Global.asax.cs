@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -73,8 +74,12 @@ namespace Unblocker
             {
                 var req = new UriBuilder(requestedUrl);
                 ConfigureForwarding(req);
-                return new HttpResponseMessage();
+                var response = request.CreateResponse(HttpStatusCode.Moved);
+                string fullyQualifiedUrl = request.RequestUri.GetLeftPart(UriPartial.Authority);
+response.Headers.Location = new Uri(fullyQualifiedUrl);
+                return response;
             }
+        
             var forwardUri = new UriBuilder(request.RequestUri.AbsoluteUri);
             forwardUri.Host = ForwardHost;
             forwardUri.Port = ForwardPort;
