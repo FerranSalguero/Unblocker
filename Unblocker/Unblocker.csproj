@@ -131,6 +131,8 @@
   <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\unblckr - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\unblckr - Web Deploy.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
